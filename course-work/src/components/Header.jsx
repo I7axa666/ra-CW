@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
     const [activePath, setActivePath] = useState(location.pathname);
+
+    useEffect(() => {
+        setActivePath(location.pathname);
+    }, [location.pathname]);
 
     function handleClick(path) {
         setActivePath(path);
@@ -38,7 +42,6 @@ function Header() {
                             <div>
                                 <div className="header-controls-pics">
                                     <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
-                                    {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                                     <div className="header-controls-pic header-controls-cart">
                                         {/* <div className="header-controls-cart-full">1</div> */}
                                         <div className="header-controls-cart-menu"></div>

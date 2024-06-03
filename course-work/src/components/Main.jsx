@@ -1,9 +1,8 @@
-import About from "./About"
-import Contacts from "./Contacts"
-import Page404 from "./Page404"
-
+import fetchCatalog from "../utilits/fetchCatalog"
 const Main = () => {
 
+    const data = fetchCatalog('top-sales');
+    
     return (
  
         <main className="container">
@@ -13,6 +12,7 @@ const Main = () => {
                         <img src="./img/banner.jpg" className="img-fluid" alt="К весне готовы!" />
                     </div>
                     <h2 className="banner-header">К весне готовы!</h2>
+
                 </div>
             </div>
         </main>
