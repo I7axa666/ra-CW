@@ -1,10 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Header() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [activePath, setActivePath] = useState(location.pathname);
+
     function handleClick(path) {
-        navigate(path)
+        setActivePath(path);
+        navigate(path);
     }    
         
     return (
@@ -18,16 +22,16 @@ function Header() {
                         </a>
                         <div className="collapse navbar-collapse" id="navbarMain">
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active">
+                                <li className={`nav-item ${activePath === '/' ? 'active' : ''}`}>
                                     <a className="nav-link" onClick={() => handleClick('/')}>Главная</a>
                                 </li>
-                                <li className="nav-item">
+                                <li className={`nav-item ${activePath === '/catalog.html' ? 'active' : ''}`}>
                                     <a className="nav-link" onClick={() => handleClick('/catalog.html')}>Каталог</a>
                                 </li>
-                                <li className="nav-item">
+                                <li className={`nav-item ${activePath === '/about.html' ? 'active' : ''}`}>
                                     <a className="nav-link" onClick={() => handleClick('/about.html')}>О магазине</a>
                                 </li>
-                                <li className="nav-item">
+                                <li className={`nav-item ${activePath === '/contacts.html' ? 'active' : ''}`}>
                                     <a className="nav-link" onClick={() => handleClick('/contacts.html')}>Контакты</a>
                                 </li>
                             </ul>
