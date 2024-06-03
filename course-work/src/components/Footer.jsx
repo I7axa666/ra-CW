@@ -1,4 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 const Footer = () => {
+    const navigate = useNavigate();
+    function handleClick(path) {
+        navigate(path)
+    }  
 
     return (
         <div className="container bg-light footer">
@@ -7,9 +12,9 @@ const Footer = () => {
                     <section>
                         <h5>Информация</h5>
                         <ul className="nav flex-column">
-                            <li className="nav-item"><a href="/about.html" className="nav-link">О магазине</a></li>
-                            <li className="nav-item"><a href="/catalog.html" className="nav-link">Каталог</a></li>
-                            <li className="nav-item"><a href="/contacts.html" className="nav-link">Контакты</a></li>
+                            <li className="nav-item"><a onClick={() => handleClick('/about.html')} className="nav-link">О магазине</a></li>
+                            <li className="nav-item"><a onClick={() => handleClick('/catalog.html')} className="nav-link">Каталог</a></li>
+                            <li className="nav-item"><a onClick={() => handleClick('/contacts.html')} className="nav-link">Контакты</a></li>
                         </ul>
                     </section>
                 </div>

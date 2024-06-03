@@ -8,10 +8,8 @@ import { Outlet } from "react-router-dom";
 import './css/styles.scss';
 
 function App() {
-  
-
   return (
-    <div className='container'>
+    <div className="container">
       <Header />
       <Main />
       <Outlet />
