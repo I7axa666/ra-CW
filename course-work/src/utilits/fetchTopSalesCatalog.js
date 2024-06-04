@@ -1,5 +1,5 @@
-export default async function fetchCatalog() {
-    const url = new URL('http://localhost:7070/api/categories');
+export default async function fetchTopSalesCatalog() {
+    const url = new URL('http://localhost:7070/api/top-sales');
     
     const response = await fetch(url);
     if(!response.ok) {

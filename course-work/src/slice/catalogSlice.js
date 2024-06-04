@@ -2,27 +2,29 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     products: [],
-    isLoadinf: false,
+    topSales: [],
+    isLoading: false,
     error: null,   
 }
 
 const catalogSlice = createSlice({
-    name: 'shoseCatalog',
+    name: 'catalog',
     initialState,
     reducers: {
-        productsFetching(state) {
-            state.isLoadinf = true;
+        topSalesFetching(state) {
+            state.isLoading = true;
+            state.error = null;
         },
-        productsFetchingSuccess(state, action) {
-            state.isLoadinf = false;
-            state.products = action.payload;
+        topSalesFetchingSuccess(state, action) {
+            state.isLoading = false;
+            state.topSales = action.payload;
         },
-        productsFetchingError(state, action) {
-            state.isLoadinf = false;
+        topSalesFetchingError(state, action) {
+            state.isLoading = false;
             state.error = action.payload;
         },
     }
 })
 
-export const { productsFetching, productsFetchingSuccess, productsFetchingError } = catalogSlice.actions;
+export const { topSalesFetching, topSalesFetchingSuccess, topSalesFetchingError } = catalogSlice.actions;
 export default catalogSlice.reducer;

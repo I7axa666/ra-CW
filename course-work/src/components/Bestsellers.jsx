@@ -1,17 +1,24 @@
-import { Outlet } from "react-router-dom"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { topSalesFetching } from "../slice/catalogSlice"
+import Card from "./Card"
 
 const Bestsellers = ()  =>  {
 
+    const dispatch = useDispatch();
+    const { topSales, isLoading, error } = useSelector(state => state.catalog)
+    useEffect(() => {
+        dispatch(topSalesFetching());
+    }, []);
+
     return (                    
     <section className="top-sales">
-        {/* <Outlet /> */}
         <h2 className="text-center">Хиты продаж!</h2>
-        <div className="preloader">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div className="row">
+            {isLoading && <div className="preloader"></div>}
+            {error && <p>{error}</p>}
+            {topSales && <Card list={topSales} />}
+        </div>        
     </section>
     )
 }
