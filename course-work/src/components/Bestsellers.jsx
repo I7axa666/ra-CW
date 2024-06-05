@@ -4,7 +4,6 @@ import { topSalesFetching } from "../slice/catalogSlice"
 import Card from "./Card"
 
 const Bestsellers = ()  =>  {
-
     const dispatch = useDispatch();
     const { topSales, isLoading, error } = useSelector(state => state.catalog)
     useEffect(() => {
