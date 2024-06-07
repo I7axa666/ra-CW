@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { categoriesFetching, productsFetching } from "../slice/catalogSlice"
+import { categoriesFetching, productsFetching, changeOffset } from "../slice/catalogSlice"
 import Categories from "./Categories"
 import MainPageCatalog from "./MainPageCatalog"
 
@@ -10,10 +10,9 @@ const Catalog = ()  =>  {
         products,
         categories, 
         errorCategories,
-        viewProductCategory, 
+        viewProductCategory,
+        offset, 
     } = useSelector(state => state.catalog);
-
-    const [offset, setOffset] = useState(0);
 
     useEffect(() => {
         dispatch(categoriesFetching());
@@ -24,7 +23,8 @@ const Catalog = ()  =>  {
     }, [dispatch, offset, viewProductCategory]);
 
     const handleClick = () => {
-        setOffset(offset + 6);
+
+        dispatch(changeOffset(offset + 6));
     };
 
     return (                    
@@ -34,7 +34,7 @@ const Catalog = ()  =>  {
         {errorCategories && <p>{errorCategories}</p>}
         {categories && <Categories list={categories} />}
         <MainPageCatalog />
-        {!products || products.length < 6 ? null :
+        {!products || products.length < 6 ? <></> :
         <div className="text-center">
             <button className="btn btn-outline-primary" onClick={handleClick}>Загрузить ещё</button>
         </div>}

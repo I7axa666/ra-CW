@@ -3,11 +3,11 @@ export default async function fetchCatalog(viewProductCategory, offset) {
     const url = new URL('http://localhost:7070/api/items');
 
 
-    if(viewProductCategory) {
+    if(viewProductCategory !== 0) {
         url.searchParams.append('categoryId', Number(viewProductCategory));
     }
 
-    if(offset) {
+    if(offset !== 0) {
         url.searchParams.append('offset', Number(offset));
     }
     

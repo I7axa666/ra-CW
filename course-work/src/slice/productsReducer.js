@@ -17,16 +17,21 @@ const productsReducer = {
             return acc;
             
         }, []);
-
-        console.log(uniqueProducts)
-
-        state.productsCatalog = uniqueProducts;
-        console.log(state.productsCatalog)
+        if (state.viewProductCategory) {
+            state.productsCatalog = uniqueProducts.filter(product => product.category === state.viewProductCategory);
+        } else {
+            state.productsCatalog = uniqueProducts;
+        }
+        
     },
     productsFetchingError(state, action) {
         state.isLoadingProducts = false;
         state.errorProducts = action.payload;
     },
+    clearProducts(state) {
+        state.products = [];
+        state.productsCatalog = [];
+    }
 };
 
 export default productsReducer;
