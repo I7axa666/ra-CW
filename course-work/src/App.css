@@ -171,12 +171,14 @@ section {
 /* Catalog */
 .catalog {
   min-height: 600px;
+  
 }
 
 .catalog-categories {
   font-size: 1.3rem;
   margin-bottom: 2em;
 }
+
 
 .catalog-item-card {
   margin-bottom: 1em;
@@ -211,6 +213,37 @@ section {
   outline: none;
   box-shadow: none;
 }
+
+
+
+/* Родительский элемент */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch; /* Растягивает все дочерние элементы до одинаковой высоты */
+  }
+  
+  /* Элементы col-4 */
+  .col-4 {
+  flex: 1 1 33.3333%;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Добавьте это, чтобы дочерние элементы растягивались */
+  }
+  
+  /* Элементы card catalog-item-card */
+  .card.catalog-item-card {
+  flex: 1; /* Растягивает элемент на всю доступную высоту */
+  display: flex;
+  flex-direction: column;
+  }
+  
+  /* Элементы card-img-top img-fluid */
+  .card-img-top.img-fluid {
+  margin-top: 10px; /* Добавьте отступ сверху по необходимости */
+  }
+
 
 /* Footer */
 .footer {

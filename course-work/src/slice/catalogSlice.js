@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import topSalesReducer from './topSalesReducer';
+import categoriesReducer from './categoriesReducer';
+import productsReducer from './productsReducer';
+import viewProductCategoryReducer from './viewProductCategoryReducer';
 
 const initialState = {
     products: [],
+    productsCatalog: [],
     viewProductCategory: null,
     topSales: [],
     categories: [],
@@ -17,46 +22,12 @@ const catalogSlice = createSlice({
     name: 'catalog',
     initialState,
     reducers: {
-        topSalesFetching(state) {
-            state.isLoading = true;
-            state.error = null;
-        },
-        topSalesFetchingSuccess(state, action) {
-            state.isLoading = false;
-            state.topSales = action.payload;
-        },
-        topSalesFetchingError(state, action) {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        categoriesFetching(state) {
-            state.isLoadingCategories = true;
-            state.errorCategories = null;
-        },
-        categoriesFetchingSuccess(state, action) {
-            state.isLoadingCategories = false;
-            state.categories = action.payload;
-        },
-        categoriesFetchingError(state, action) {
-            state.isLoadingCategories = false;
-            state.errorCategories = action.payload;
-        },
-        productsFetching(state) {
-            state.isLoadingProducts = true;
-            state.errorProducts = null;
-        },
-        productsFetchingSuccess(state, action) {
-            state.isLoadingProducts = false;
-            state.products = action.payload;
-        },
-        productsFetchingError(state, action) {
-            state.isLoadingProducts = false;
-            state.errorProducts = action.payload;
-        },
-        changeCategory(state, action) {
-            state.viewProductCategory = action.payload;
-        },
-    }
+        ...topSalesReducer,
+        ...categoriesReducer,
+        ...productsReducer,
+        ...viewProductCategoryReducer,
+    },
+    
 })
 
 export const { 
