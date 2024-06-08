@@ -5,15 +5,21 @@ function Header() {
     const navigate = useNavigate();
     const location = useLocation();
     const [activePath, setActivePath] = useState(location.pathname);
+    const [search, setSearch] = useState(false);
 
     useEffect(() => {
         setActivePath(location.pathname);
     }, [location.pathname]);
 
     function handleClick(path) {
+        if(search) setSearch(!search);
         setActivePath(path);
         navigate(path);
-    }    
+    }
+    
+    const openSearch = () => {
+        setSearch(!search);
+    }
         
     return (
 
@@ -41,13 +47,16 @@ function Header() {
                             </ul>
                             <div>
                                 <div className="header-controls-pics">
-                                    <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
+                                    <div data-id="search-expander" className={`header-controls-pic header-controls-search ${!search ? "" : "invisible"}`} onClick={() => openSearch()}></div>
                                     <div className="header-controls-pic header-controls-cart">
-                                        {/* <div className="header-controls-cart-full">1</div> */}
-                                        <div className="header-controls-cart-menu"></div>
+                                        {/* <div className="header-controls-cart-full">1</div> */}                                        
+                                        <div className="header-controls-cart-menu" ></div>
                                     </div>
                                 </div>
-                                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
+                                <form 
+                                    data-id="search-form" 
+                                    className={`header-controls-search-form form-inline ${search ? "" : "invisible"}`}
+                                >
                                     <input className="form-control" placeholder="Поиск" />
                                 </form>
                             </div>

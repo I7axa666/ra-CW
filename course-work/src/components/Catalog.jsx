@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { useLocation } from "react-router-dom"
 import { categoriesFetching, productsFetching, changeOffset } from "../slice/catalogSlice"
 import Categories from "./Categories"
 import MainPageCatalog from "./MainPageCatalog"
 
 const Catalog = ()  =>  {
     const dispatch = useDispatch();
+    const location = useLocation();
     const {
         products,
         categories, 
@@ -30,6 +32,13 @@ const Catalog = ()  =>  {
     return (                    
     <section className="catalog">
         <h2 className="text-center">Каталог</h2>
+        {location.pathname === '/catalog.html' ?
+            <form class="catalog-search-form form-inline">
+                <input class="form-control" placeholder="Поиск" />
+            </form> : 
+            <></>
+        }
+       
         <div className="preloader"></div>
         {errorCategories && <p>{errorCategories}</p>}
         {categories && <Categories list={categories} />}
