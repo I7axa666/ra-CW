@@ -321,6 +321,10 @@ section {
 }
 
 /* Bootstrap */
+.nav-link {
+  cursor: pointer;
+}
+
 .nav-link.active {
   color: #ff0000;
 }

@@ -21,22 +21,22 @@ export default function Categories({ list }) {
     return (
         <ul className="catalog-categories nav justify-content-center">
             <li className="nav-item">
-                <Link 
+                <p 
                     className={`nav-link ${activeCategory === 0 ? 'active' : ''}`}
                     onClick={() => handleClick(0, 0)}
                 >
                     Все
-                </Link>
+                </p>
             </li>
             {list.map((category, index) => (
                 <li className="nav-item" key={category.id}>
-                    <Link 
+                    <p 
                         className={`nav-link ${activeCategory === index + 1 ? 'active' : ''}`}
                         
                         onClick={() => handleClick(index + 1, category.id)}
                     >
                         {category.title}
-                    </Link>
+                    </p>
                 </li>
             ))}
         </ul>

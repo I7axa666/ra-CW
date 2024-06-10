@@ -7,7 +7,7 @@ const Main = () => {
             <div className="row">
                 <div className="col">
                     <div className="banner">
-                        <img src="./img/banner.jpg" className="img-fluid" alt="К весне готовы!" />
+                        <img src="/public/img/banner.jpg" className="img-fluid" alt="К весне готовы!" />
                     </div>
                     <h2 className="banner-header">К весне готовы!</h2>
                     

@@ -9,7 +9,7 @@ function Card ({ list, cl }) {
                         <div className="card-body">
                             <p className="card-text">{item.title}</p>
                             <p className="card-text">{item.price} руб.</p>
-                            <a href={`/${item.id}.html`} className="btn btn-outline-primary">Заказать</a>
+                            <a href={`/catalog/${item.id}.html`} className="btn btn-outline-primary">Заказать</a>
                             {/* <a className="btn btn-outline-primary">Заказать</a> */}
                         </div>
                     </div>
