@@ -4,9 +4,8 @@ import fetchCatalog from '../utilits/fetchCatalog';
 
 function* fetchCatalogWorker(action) {
     try {
-        const { viewProductCategory, offset } = action.payload;
-        
-        const data = yield call(fetchCatalog, viewProductCategory, offset);
+        const { viewProductCategory, offset, productSearch } = action.payload;
+        const data = yield call(fetchCatalog, viewProductCategory, offset, productSearch);
         yield put(productsFetchingSuccess(data));
     } catch (error) {
         yield put(productsFetchingError(error.message));

@@ -1,8 +1,7 @@
 
-export default async function fetchCatalog(viewProductCategory, offset) {
+export default async function fetchCatalog(viewProductCategory, offset, productSearch) {
     const url = new URL('http://localhost:7070/api/items');
-
-
+    
     if(viewProductCategory !== 0) {
         url.searchParams.append('categoryId', Number(viewProductCategory));
     }
@@ -10,7 +9,10 @@ export default async function fetchCatalog(viewProductCategory, offset) {
     if(offset !== 0) {
         url.searchParams.append('offset', Number(offset));
     }
-    
+
+    if(productSearch && productSearch !== '') {
+        url.searchParams.append('q', productSearch);
+    }
     const response = await fetch(url);
     
     if(!response.ok) {

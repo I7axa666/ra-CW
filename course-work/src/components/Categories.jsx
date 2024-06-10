@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Categories({ list }) {
     const [activeCategory, setActiveCategory] = useState(0);
-    const { viewProductCategory, offset } = useSelector(state => state.catalog);
+    const { offset, productSearch, viewProductCategory } = useSelector(state => state.catalog);
     const dispatch = useDispatch();
     
     const handleClick = (index, id) => {
@@ -15,7 +15,7 @@ export default function Categories({ list }) {
         dispatch(clearProducts());
         dispatch(changeCategory(id));
         dispatch(changeOffset(0));
-        dispatch(productsFetching({offset, index}))
+        dispatch(productsFetching({offset, viewProductCategory, productSearch}))
     };
 
     return (

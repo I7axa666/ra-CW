@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { searchProduct, clearProducts, productsFetching } from '../slice/catalogSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
     const [activePath, setActivePath] = useState(location.pathname);
     const [search, setSearch] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const dispatch = useDispatch();
+    const { offset, productSearch, viewProductCategory } = useSelector(state => state.catalog);
 
     useEffect(() => {
         setActivePath(location.pathname);
@@ -13,13 +18,41 @@ function Header() {
 
     function handleClick(path) {
         if(search) setSearch(!search);
+        dispatch(searchProduct(''));
+        dispatch(clearProducts());
+        dispatch(productsFetching(offset, productSearch, viewProductCategory));
         setActivePath(path);
         navigate(path);
     }
+
+    function searchProcess() {
+        
+        if(searchQuery.trim() !== '') {
+            dispatch(searchProduct(searchQuery))
+            setSearch(!search);
+            setSearchQuery('');
+            dispatch(clearProducts());
+            dispatch(productsFetching(offset, productSearch, viewProductCategory));
+            navigate('/catalog.html');
+        };
+
+        setSearch(!search);
+
+    }
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+
+        searchProcess();
+    }
     
     const openSearch = () => {
-        setSearch(!search);
+        searchProcess();  
     }
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
         
     return (
 
@@ -47,7 +80,7 @@ function Header() {
                             </ul>
                             <div>
                                 <div className="header-controls-pics">
-                                    <div data-id="search-expander" className={`header-controls-pic header-controls-search ${!search ? "" : "invisible"}`} onClick={() => openSearch()}></div>
+                                    <div data-id="search-expander" className="header-controls-pic header-controls-search" onClick={() => openSearch()}></div>
                                     <div className="header-controls-pic header-controls-cart">
                                         {/* <div className="header-controls-cart-full">1</div> */}                                        
                                         <div className="header-controls-cart-menu" ></div>
@@ -56,8 +89,14 @@ function Header() {
                                 <form 
                                     data-id="search-form" 
                                     className={`header-controls-search-form form-inline ${search ? "" : "invisible"}`}
+                                    onSubmit={handleSearchSubmit}
                                 >
-                                    <input className="form-control" placeholder="Поиск" />
+                                    <input 
+                                        className="form-control"
+                                        placeholder="Поиск"
+                                        value={searchQuery}
+                                        onChange={handleSearchChange} 
+                                    />
                                 </form>
                             </div>
                         </div>

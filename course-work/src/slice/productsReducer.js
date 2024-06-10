@@ -1,6 +1,5 @@
 const productsReducer = {
     productsFetching(state) {
-        
         state.isLoadingProducts = true;
         state.errorProducts = null;
     },
@@ -31,7 +30,11 @@ const productsReducer = {
     clearProducts(state) {
         state.products = [];
         state.productsCatalog = [];
+    },
+    searchProduct(state, action) {
+        state.productSearch = action.payload;
     }
+
 };
 
 export default productsReducer;

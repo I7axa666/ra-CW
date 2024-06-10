@@ -8,6 +8,7 @@ import offsetChangeReducer from './offsetChangeReducer';
 const initialState = {
     products: [],
     productsCatalog: [],
+    productSearch: "",
     viewProductCategory: 0,
     offset: 0,
     topSales: [],
@@ -17,7 +18,7 @@ const initialState = {
     isLoading: false,
     errorProducts: null,
     error: null,
-    errorCategories: null,   
+    errorCategories: null, 
 }
 
 const catalogSlice = createSlice({
@@ -37,7 +38,7 @@ export const {
     topSalesFetching, topSalesFetchingSuccess, topSalesFetchingError,
     categoriesFetching, categoriesFetchingSuccess, categoriesFetchingError,
     productsFetching, productsFetchingSuccess, productsFetchingError,
-    changeCategory, changeOffset, clearProducts
+    changeCategory, changeOffset, clearProducts, searchProduct,
 } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

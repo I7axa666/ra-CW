@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
-import { categoriesFetching, productsFetching, changeOffset } from "../slice/catalogSlice"
+import { categoriesFetching, productsFetching, changeOffset, searchProduct, clearProducts } from "../slice/catalogSlice"
 import Categories from "./Categories"
 import MainPageCatalog from "./MainPageCatalog"
 
@@ -10,6 +10,7 @@ const Catalog = ()  =>  {
     const location = useLocation();
     const {
         products,
+        productSearch,
         categories, 
         errorCategories,
         viewProductCategory,
@@ -21,20 +22,34 @@ const Catalog = ()  =>  {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(productsFetching({offset, viewProductCategory}));
+        dispatch(productsFetching({offset, viewProductCategory, productSearch}));
     }, [dispatch, offset, viewProductCategory]);
 
     const handleClick = () => {
-
         dispatch(changeOffset(offset + 6));
+    };
+
+    const onChange = (event) => {
+        dispatch(searchProduct(event.target.value));
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        dispatch(clearProducts());
+        dispatch(productsFetching({offset, viewProductCategory, productSearch}));
     };
 
     return (                    
     <section className="catalog">
         <h2 className="text-center">Каталог</h2>
         {location.pathname === '/catalog.html' ?
-            <form class="catalog-search-form form-inline">
-                <input class="form-control" placeholder="Поиск" />
+            <form className="catalog-search-form form-inline" onSubmit={handleSearchSubmit}>
+                <input
+                    className="form-control"
+                    value={productSearch}
+                    placeholder="Поиск"
+                    onChange={onChange} 
+                />
             </form> : 
             <></>
         }
