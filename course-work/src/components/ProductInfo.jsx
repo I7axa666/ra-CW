@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productInfoFetching } from "../slice/catalogSlice";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 function ProductInfo () {
     const { id } = useParams();
@@ -35,25 +36,52 @@ function ProductInfo () {
         setSelectedSize(size);
     }
 
-    if (isLoadingProductInfo) {
-        return <div>Loading...</div>;
-    }
-
-    if (errorProductInfo) {
-        return <div>Error: {errorProductInfo}</div>;
-    }
-
     const goToCart = () => {
+        const keyId = uuidv4();
         const productOrder = {
             id,
+            keyId,
             title, 
             selectedSize, 
             selectedCount, 
             price,
             selectedCount,
         }
-        localStorage.setItem(id, JSON.stringify(productOrder));
+
+        let found = false;
+
+        if(localStorage.length > 0) {
+            console.log(localStorage)      
+            // debugger
+            for(let i=0; i<localStorage.length; i++) {
+                let key = localStorage.key(i);
+                
+                const product = JSON.parse(localStorage[key]);
+                if (product.id === productOrder.id && product.selectedSize === productOrder.selectedSize) {
+                    localStorage.removeItem(key);
+                    productOrder.selectedCount += product.selectedCount;
+                    found = true;
+                    break;
+                }
+              
+            }
+            localStorage.setItem(keyId, [JSON.stringify(productOrder)]);
+        }
+
+        if (!found) {
+            localStorage.setItem(keyId, [JSON.stringify(productOrder)]);
+        }
+        
         navigate('/cart.html');
+    }
+
+    
+    if (isLoadingProductInfo) {
+        return <div>Loading...</div>;
+    }
+
+    if (errorProductInfo) {
+        return <div>Error: {errorProductInfo}</div>;
     }
 
     return (

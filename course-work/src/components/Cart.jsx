@@ -6,6 +6,7 @@ function Cart() {
   const [totalCost, setTotalCost] = useState(0);
   
   useEffect(() => {
+  
     const storedProducts = { ...localStorage };
     const order = [];
     let total = 0;
@@ -21,12 +22,14 @@ function Cart() {
   }, []);
 
   const deleteProduct = (id) => {
-    const updatedProductList = productList.filter(product => product.id !== id);
+    const updatedProductList = productList.filter(product => 
+      product.keyId !== id
+    );
     setProductList(updatedProductList);
     
     for (let key in localStorage) {
      const product = JSON.parse(localStorage[key]);
-     if (product.id === id) {
+     if (product.keyId === id) {
         localStorage.removeItem(key);
         break;
      }
@@ -63,7 +66,7 @@ function Cart() {
                     <td>{item.selectedCount}</td>
                     <td>{item.price} руб.</td>
                     <td>{item.price * item.selectedCount} руб.</td>
-                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteProduct(item.id)}>Удалить</button></td>
+                    <td><button className="btn btn-outline-danger btn-sm" onClick={() => deleteProduct(item.keyId)}>Удалить</button></td>
                   </tr>
                 )
               )
