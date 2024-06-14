@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import OrderCard from './OrderCard';
 
 function Cart() {
   const [productList, setProductList] = useState([]);
@@ -27,13 +28,19 @@ function Cart() {
     );
     setProductList(updatedProductList);
     
-    for (let key in localStorage) {
-     const product = JSON.parse(localStorage[key]);
-     if (product.keyId === id) {
+    for(let i=0; i<localStorage.length; i++) {
+      let key = localStorage.key(i);
+      
+      const product = JSON.parse(localStorage[key]);
+      if (product.keyId === id) {
         localStorage.removeItem(key);
         break;
      }
-    }
+    
+  }
+
+
+
 
     const newTotalCost = updatedProductList.reduce((total, product) => total + product.price * product.selectedCount, 0);
     setTotalCost(newTotalCost);
@@ -41,6 +48,7 @@ function Cart() {
 
 
     return (
+      <>
       <section className="cart">
         <h2 className="text-center">Корзина</h2>
         <table className="table table-bordered">
@@ -78,6 +86,11 @@ function Cart() {
           </tbody>
         </table>
       </section>
+      {totalCost > 0 ?
+        <OrderCard />
+        : null
+      }
+      </>
     )
 
 }

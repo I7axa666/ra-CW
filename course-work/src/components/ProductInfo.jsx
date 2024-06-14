@@ -39,7 +39,7 @@ function ProductInfo () {
     const goToCart = () => {
         const keyId = uuidv4();
         const productOrder = {
-            id,
+            id: Number(id),
             keyId,
             title, 
             selectedSize, 
@@ -50,8 +50,7 @@ function ProductInfo () {
 
         let found = false;
 
-        if(localStorage.length > 0) {
-            console.log(localStorage)      
+        if(localStorage.length > 0) {     
             // debugger
             for(let i=0; i<localStorage.length; i++) {
                 let key = localStorage.key(i);
