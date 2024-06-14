@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productInfoFetching } from "../slice/catalogSlice";
 import { useEffect, useState } from "react";
 
 function ProductInfo () {
     const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { productInfo, isLoadingProductInfo, errorProductInfo } = useSelector(state => state.catalog);
     const [selectedCount, setSelectedCount] = useState(1);
@@ -22,7 +23,7 @@ function ProductInfo () {
     
     const {
         title, images, manufacturer, sku, color,
-        material, reason, season,
+        material, reason, season, price
     } = productInfo;
 
     let image = '';
@@ -40,6 +41,19 @@ function ProductInfo () {
 
     if (errorProductInfo) {
         return <div>Error: {errorProductInfo}</div>;
+    }
+
+    const goToCart = () => {
+        const productOrder = {
+            id,
+            title, 
+            selectedSize, 
+            selectedCount, 
+            price,
+            selectedCount,
+        }
+        localStorage.setItem(id, JSON.stringify(productOrder));
+        navigate('/cart.html');
     }
 
     return (
@@ -125,21 +139,17 @@ function ProductInfo () {
                         </span>
                         </p>                               
                     </div>
-                    <button className="btn btn-danger btn-block btn-lg">
-                        В корзину
-                    </button>
-                    {/* {hasAvailableSize && hasAvailableSize?.length > 0 && (
                     <button
                         className={
                         selectedSize
                             ? "btn btn-danger btn-block btn-lg"
                             : "btn btn-danger btn-block btn-lg disabled"
                         }
-                        onClick={addToCart}
+                        onClick={goToCart}
                     >
                         В корзину
                     </button>
-                    )} */}
+
                 </div>
             </div>
         </section>

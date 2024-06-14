@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { searchProduct, clearProducts, productsFetching } from '../slice/catalogSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -81,10 +81,11 @@ function Header() {
                             <div>
                                 <div className="header-controls-pics">
                                     <div data-id="search-expander" className="header-controls-pic header-controls-search" onClick={() => openSearch()}></div>
-                                    <div className="header-controls-pic header-controls-cart">
-                                        {/* <div className="header-controls-cart-full">1</div> */}                                        
-                                        <div className="header-controls-cart-menu" ></div>
-                                    </div>
+                                    <Link to="/cart.html">
+                                        <div className="header-controls-pic header-controls-cart">
+                                            {localStorage.length > 0 ? <div className="header-controls-cart-full">{localStorage.length}</div> : null} 
+                                        </div>
+                                    </Link>    
                                 </div>
                                 <form 
                                     data-id="search-form" 
