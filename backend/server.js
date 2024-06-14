@@ -75,6 +75,7 @@ router.get('/api/items', async (ctx, next) => {
 
 router.get('/api/items/:id', async (ctx, next) => {
     const id = Number(ctx.params.id);
+    console.log(id);
     const item = items.find(o => o.id === id);
     if (item === undefined) {
         return fortune(ctx, 'Not found', 404);

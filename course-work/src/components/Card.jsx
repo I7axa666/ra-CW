@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function Card ({ list, cl }) {
     if(!cl) cl = "";
     return (
@@ -9,7 +10,7 @@ function Card ({ list, cl }) {
                         <div className="card-body">
                             <p className="card-text">{item.title}</p>
                             <p className="card-text">{item.price} руб.</p>
-                            <a href={`/catalog/${item.id}.html`} className="btn btn-outline-primary">Заказать</a>
+                            <Link to={`/catalog/${item.id}.html`} className="btn btn-outline-primary">Заказать</Link>
                             {/* <a className="btn btn-outline-primary">Заказать</a> */}
                         </div>
                     </div>

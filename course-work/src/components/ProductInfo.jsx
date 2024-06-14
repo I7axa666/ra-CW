@@ -1,118 +1,129 @@
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { productInfoFetching } from "../slice/catalogSlice";
+import { useEffect, useState } from "react";
 
-const ProductInfo = () => {
+function ProductInfo () {
     const { id } = useParams();
-    console.log(id)
-    return (
+    const dispatch = useDispatch();
+    const { productInfo, isLoadingProductInfo, errorProductInfo } = useSelector(state => state.catalog);
+    const [selectedCount, setSelectedCount] = useState(1);
+    const [selectedSize, setSelectedSize] = useState("");
 
+    useEffect(() => {
+        dispatch(productInfoFetching({productId: id}));    
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (productInfo.sizes && productInfo.sizes.length > 0) {
+            setSelectedSize(productInfo.sizes[0].size);
+        }
+   }, [productInfo.sizes]);
+    
+    const {
+        title, images, manufacturer, sku, color,
+        material, reason, season,
+    } = productInfo;
+
+    let image = '';
+    if (images) {
+        image = images[0];
+    }
+
+    const chooseSize = (size) => {
+        setSelectedSize(size);
+    }
+
+    if (isLoadingProductInfo) {
+        return <div>Loading...</div>;
+    }
+
+    if (errorProductInfo) {
+        return <div>Error: {errorProductInfo}</div>;
+    }
+
+    return (
+        
         <section className="catalog-item">
-            <h2 className="text-center">text-center</h2>
+            <h2 className="text-center">{title}</h2>
             <div className="row">
                 <div className="col-5">
-                    <img src="" className="img-fluid" alt="" />
+                    <img src={image} className="img-fluid" alt={title} />
                 </div>
                 <div className="col-7">
                     <table className="table table-bordered">
                         <tbody>
                             <tr>
                                 <td>Артикул</td>
-                                <td>Артикул</td>
+                                <td>{sku}</td>
                             </tr>
                             <tr>
                                 <td>Производитель</td>
-                                <td>Производитель</td>
+                                <td>{manufacturer}</td>
                             </tr>
                             <tr>
                                 <td>Цвет</td>
-                                <td>Цвет</td>
+                                <td>{color}</td>
                             </tr>
                             <tr>
                                 <td>Материалы</td>
-                                <td>Материалы</td>
+                                <td>{material}</td>
                             </tr>
                             <tr>
                                 <td>Сезон</td>
-                                <td>Сезон</td>
+                                <td>{season}</td>
                             </tr>
                             <tr>
                                 <td>Повод</td>
-                                <td>Повод</td>
+                                <td>{reason}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div className="text-center">
                     <p>
                         Размеры в наличии:{" "}
-                        <span className="catalog-item-size selected">
-                            18 US
-                        </span>
-
-                        {/* {itemDetail?.sizes.map((size) => {
-                        if (size.available)
-                            return (
-                            <span
-                                className={
-                                size.size === selectedSize
-                                    ? "catalog-item-size selected"
-                                    : "catalog-item-size"
-                                }
-                                key={itemDetail.id + size.size}
-                                onClick={chooseSize}
-                            >
-                                {size.size}
-                            </span>
-                            );
-                        })} */}
+                        {productInfo.sizes ? (
+                            productInfo.sizes.map((size, index) => (
+                                <span 
+                                    className={`catalog-item-size ${size.size === selectedSize ? "selected" : ""}`} 
+                                    key={index}  
+                                    onClick={() => chooseSize(size.size)}>
+                                    {size.size}
+                                </span>
+                            ))
+                        ) : (
+                            <>Нет в наличии</>
+                        )}
                     </p>
                     <p>
                         Количество:{" "}
                         <span className="btn-group btn-group-sm pl-2">
-                            <button className="btn btn-secondary">
+                            <button 
+                                className={
+                                    selectedCount > 1 && selectedSize
+                                    ? "btn btn-secondary"
+                                    : "btn btn-secondary disabled"
+                                }
+                                onClick={() => setSelectedCount(selectedCount - 1)}
+                            >
                             -
                             </button>
                             <span className="btn btn-outline-primary">
-                            1
+                                {selectedCount}
                             </span>
-                            <button className="btn btn-secondary">
-                            +
-                            </button>
-                        </span>
-                        </p>
+                            <button 
+                                className={
+                                    selectedCount < 10 && selectedSize
+                                    ? "btn btn-secondary"
+                                    : "btn btn-secondary disabled"
+                                }
+                                onClick={() => setSelectedCount(selectedCount + 1)}
 
-                    {/* {hasAvailableSize && hasAvailableSize?.length > 0 && (
-                        <p>
-                        Количество:{" "}
-                        <span className="btn-group btn-group-sm pl-2">
-                            <button
-                            className={
-                                selectedCount > 1 && selectedSize
-                                ? "btn btn-secondary"
-                                : "btn btn-secondary disabled"
-                            }
-                            onClick={() => {
-                                setCount(selectedCount - 1);
-                            }}
-                            >
-                            -
-                            </button>
-                            <span className="btn btn-outline-primary">
-                            {selectedCount}
-                            </span>
-                            <button
-                            className={
-                                selectedCount < 10 && selectedSize
-                                ? "btn btn-secondary"
-                                : "btn btn-secondary disabled"
-                            }
-                            onClick={() => {
-                                setCount(selectedCount + 1);
-                            }}
                             >
                             +
                             </button>
                         </span>
-                        </p>
-                    )} */}
+                        </p>                               
                     </div>
                     <button className="btn btn-danger btn-block btn-lg">
                         В корзину

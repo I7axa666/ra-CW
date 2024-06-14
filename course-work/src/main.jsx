@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from './components/About.jsx'
 import Contacts from './components/Contacts.jsx'
 import ProductInfo from './components/ProductInfo.jsx'
+import Cart from './components/Cart.jsx'
 import { Provider } from 'react-redux';
 import store from './store/store';
 
@@ -44,7 +45,11 @@ const router = createBrowserRouter([
       {
         path: "/catalog/:id.html",
         element: <ProductInfo />,
-      }  
+      },
+      {
+        path: "/cart.html",
+        element: <Cart />,
+      }   
     ],
   },
 
