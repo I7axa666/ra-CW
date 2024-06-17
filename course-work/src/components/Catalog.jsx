@@ -14,7 +14,9 @@ const Catalog = ()  =>  {
         categories, 
         errorCategories,
         viewProductCategory,
-        offset, 
+        offset,
+        isLoadingProducts,
+        productsCatalog, 
     } = useSelector(state => state.catalog);
 
     useEffect(() => {
@@ -39,30 +41,44 @@ const Catalog = ()  =>  {
         dispatch(productsFetching({offset, viewProductCategory, productSearch}));
     };
 
-    return (                    
-    <section className="catalog">
-        <h2 className="text-center">Каталог</h2>
-        {location.pathname === '/catalog.html' ?
-            <form className="catalog-search-form form-inline" onSubmit={handleSearchSubmit}>
-                <input
-                    className="form-control"
-                    value={productSearch}
-                    placeholder="Поиск"
-                    onChange={onChange} 
-                />
-            </form> : 
-            <></>
-        }
-       
-        <div className="preloader"></div>
-        {errorCategories && <p>{errorCategories}</p>}
-        {categories && <Categories list={categories} />}
-        <MainPageCatalog />
-        {!products || products.length < 6 ? <></> :
-        <div className="text-center">
-            <button className="btn btn-outline-primary" onClick={handleClick}>Загрузить ещё</button>
-        </div>}
-    </section>
+    return (
+        <>
+
+                 
+                <section className="catalog">
+                    <h2 className="text-center">Каталог</h2>
+                    {location.pathname === '/catalog.html' ?
+                        <form className="catalog-search-form form-inline" onSubmit={handleSearchSubmit}>
+                            <input
+                                className="form-control"
+                                value={productSearch}
+                                placeholder="Поиск"
+                                onChange={onChange} 
+                            />
+                        </form> : 
+                        <></>
+                    }
+                
+                    {errorCategories && <></>}
+                    {categories && <Categories list={categories} />}
+                    {productsCatalog.length > 0 && (<MainPageCatalog />)}
+                    {isLoadingProducts && (
+                        <div className="preloader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    )}
+
+
+                    {!products || products.length < 6 ? <></> :
+                    <div className="text-center">
+                        <button className="btn btn-outline-primary" onClick={handleClick}>Загрузить ещё</button>
+                    </div>}
+                </section>
+            
+        </>
     )
 }
 

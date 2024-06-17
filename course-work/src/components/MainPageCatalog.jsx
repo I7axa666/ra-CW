@@ -5,17 +5,13 @@ import Card from "./Card";
 
 export default function MainPageCatalog() {
     const dispatch = useDispatch();
-    const { isLoadingProducts, productsCatalog,  } = useSelector(state => state.catalog);
-    // useEffect(() => {
-    //     dispatch(productsFetching());
-    // }, []);
+    const { productsCatalog } = useSelector(state => state.catalog);
     
-
     return (
-        <div className="row">
-            {isLoadingProducts && <div className="preloader"></div>}
-            {/* {errorProducts && <p>{error}</p>} */}
-            {productsCatalog && <Card list={productsCatalog} cl="catalog-item-card" />}
-        </div>
+                 
+            <div className="row">
+                <Card list={productsCatalog} cl="catalog-item-card" />
+            </div>
+
     )
 }

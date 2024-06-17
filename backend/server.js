@@ -24,15 +24,15 @@ const randomNumber = (start, stop) => {
 
 const fortune = (ctx, body = null, status = 200) => {
     // Uncomment for delay
-    // const delay = randomNumber(1, 10) * 1000;
-    const delay = 0;
+    const delay = randomNumber(1, 10) * 1000;
+    // const delay = 0;
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             // Uncomment for error generation
-            // if (Math.random() > 0.8) {
-            //     reject(new Error('Something bad happened'));
-            //     return;
-            // }
+            if (Math.random() > 0.8) {
+                reject(new Error('Something bad happened'));
+                return;
+            }
 
             ctx.response.status = status;
             ctx.response.body = body;
@@ -85,7 +85,7 @@ router.get('/api/items/:id', async (ctx, next) => {
 
 router.post('/api/order', async (ctx, next) => {
     const { owner: { phone, address }, items } = ctx.request.body;
-    console.log(ctx.request.body)
+   
     if (typeof phone !== 'string') {
         return fortune(ctx, 'Bad Request: Phone', 400);
     }

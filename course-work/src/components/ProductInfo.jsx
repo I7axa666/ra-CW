@@ -74,112 +74,117 @@ function ProductInfo () {
         navigate('/cart.html');
     }
 
-    
-    if (isLoadingProductInfo) {
-        return <div>Loading...</div>;
-    }
-
-    if (errorProductInfo) {
-        return <div>Error: {errorProductInfo}</div>;
-    }
-
     return (
-        
-        <section className="catalog-item">
-            <h2 className="text-center">{title}</h2>
-            <div className="row">
-                <div className="col-5">
-                    <img src={image} className="img-fluid" alt={title} />
+        <>
+            {isLoadingProductInfo && (
+                <div className="preloader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-                <div className="col-7">
-                    <table className="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>Артикул</td>
-                                <td>{sku}</td>
-                            </tr>
-                            <tr>
-                                <td>Производитель</td>
-                                <td>{manufacturer}</td>
-                            </tr>
-                            <tr>
-                                <td>Цвет</td>
-                                <td>{color}</td>
-                            </tr>
-                            <tr>
-                                <td>Материалы</td>
-                                <td>{material}</td>
-                            </tr>
-                            <tr>
-                                <td>Сезон</td>
-                                <td>{season}</td>
-                            </tr>
-                            <tr>
-                                <td>Повод</td>
-                                <td>{reason}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="text-center">
-                    <p>
-                        Размеры в наличии:{" "}
-                        {productInfo.sizes ? (
-                            productInfo.sizes.map((size, index) => (
-                                <span 
-                                    className={`catalog-item-size ${size.size === selectedSize ? "selected" : ""}`} 
-                                    key={index}  
-                                    onClick={() => chooseSize(size.size)}>
-                                    {size.size}
+            )}
+
+            {errorProductInfo && <></>}
+
+            {productInfo && !isLoadingProductInfo && (
+                <section className="catalog-item">
+                    <h2 className="text-center">{title}</h2>
+                    <div className="row">
+                        <div className="col-5">
+                            <img src={image} className="img-fluid" alt={title} />
+                        </div>
+                        <div className="col-7">
+                            <table className="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Артикул</td>
+                                        <td>{sku}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Производитель</td>
+                                        <td>{manufacturer}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Цвет</td>
+                                        <td>{color}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Материалы</td>
+                                        <td>{material}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Сезон</td>
+                                        <td>{season}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Повод</td>
+                                        <td>{reason}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div className="text-center">
+                            <p>
+                                Размеры в наличии:{" "}
+                                {productInfo.sizes ? (
+                                    productInfo.sizes.map((size, index) => (
+                                        <span 
+                                            className={`catalog-item-size ${size.size === selectedSize ? "selected" : ""}`} 
+                                            key={index}  
+                                            onClick={() => chooseSize(size.size)}>
+                                            {size.size}
+                                        </span>
+                                    ))
+                                ) : (
+                                    <>Нет в наличии</>
+                                )}
+                            </p>
+                            <p>
+                                Количество:{" "}
+                                <span className="btn-group btn-group-sm pl-2">
+                                    <button 
+                                        className={
+                                            selectedCount > 1 && selectedSize
+                                            ? "btn btn-secondary"
+                                            : "btn btn-secondary disabled"
+                                        }
+                                        onClick={() => setSelectedCount(selectedCount - 1)}
+                                    >
+                                    -
+                                    </button>
+                                    <span className="btn btn-outline-primary">
+                                        {selectedCount}
+                                    </span>
+                                    <button 
+                                        className={
+                                            selectedCount < 10 && selectedSize
+                                            ? "btn btn-secondary"
+                                            : "btn btn-secondary disabled"
+                                        }
+                                        onClick={() => setSelectedCount(selectedCount + 1)}
+
+                                    >
+                                    +
+                                    </button>
                                 </span>
-                            ))
-                        ) : (
-                            <>Нет в наличии</>
-                        )}
-                    </p>
-                    <p>
-                        Количество:{" "}
-                        <span className="btn-group btn-group-sm pl-2">
-                            <button 
+                                </p>                               
+                            </div>
+                            <button
                                 className={
-                                    selectedCount > 1 && selectedSize
-                                    ? "btn btn-secondary"
-                                    : "btn btn-secondary disabled"
+                                selectedSize
+                                    ? "btn btn-danger btn-block btn-lg"
+                                    : "btn btn-danger btn-block btn-lg disabled"
                                 }
-                                onClick={() => setSelectedCount(selectedCount - 1)}
+                                onClick={goToCart}
                             >
-                            -
+                                В корзину
                             </button>
-                            <span className="btn btn-outline-primary">
-                                {selectedCount}
-                            </span>
-                            <button 
-                                className={
-                                    selectedCount < 10 && selectedSize
-                                    ? "btn btn-secondary"
-                                    : "btn btn-secondary disabled"
-                                }
-                                onClick={() => setSelectedCount(selectedCount + 1)}
 
-                            >
-                            +
-                            </button>
-                        </span>
-                        </p>                               
+                        </div>
                     </div>
-                    <button
-                        className={
-                        selectedSize
-                            ? "btn btn-danger btn-block btn-lg"
-                            : "btn btn-danger btn-block btn-lg disabled"
-                        }
-                        onClick={goToCart}
-                    >
-                        В корзину
-                    </button>
-
-                </div>
-            </div>
-        </section>
+                </section>
+            )}    
+        </>    
     )
 }
 

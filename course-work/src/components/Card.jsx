@@ -11,7 +11,6 @@ function Card ({ list, cl }) {
                             <p className="card-text">{item.title}</p>
                             <p className="card-text">{item.price} руб.</p>
                             <Link to={`/catalog/${item.id}.html`} className="btn btn-outline-primary">Заказать</Link>
-                            {/* <a className="btn btn-outline-primary">Заказать</a> */}
                         </div>
                     </div>
                 </div>

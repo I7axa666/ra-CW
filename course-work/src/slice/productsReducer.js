@@ -30,6 +30,7 @@ const productsReducer = {
     clearProducts(state) {
         state.products = [];
         state.productsCatalog = [];
+        state.viewProductCategory = 0;
     },
     searchProduct(state, action) {
         state.productSearch = action.payload;
